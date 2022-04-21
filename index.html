@@ -1,0 +1,225 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            var pacman = document.createElement('div');
+pacman.style.width = '50px';
+pacman.style.height = '50px';
+pacman.style.backgroundColor = 'yellow';
+pacman.style.borderRadius = '25px';
+pacman.style.position = 'absolute';
+pacman.style.top = '0px';
+pacman.style.left = '0px';
+pacman.style.overflow = 'hidden';
+document.body.appendChild(pacman);
+var pacmanSpeed = 5;
+var pacmanDirection = 'right';
+var pacmanMove = function() {
+  var pacmanLeft = parseInt(pacman.style.left);
+  var pacmanTop = parseInt(pacman.style.top);
+  if (pacmanDirection === 'right') {
+    pacmanLeft += pacmanSpeed;
+  } else if (pacmanDirection === 'left') {
+    pacmanLeft -= pacmanSpeed;
+  } else if (pacmanDirection === 'up') {
+    pacmanTop -= pacmanSpeed;
+  } else if (pacmanDirection === 'down') {
+    pacmanTop += pacmanSpeed;
+  }
+  pacman.style.left = pacmanLeft + 'px';
+  pacman.style.top = pacmanTop + 'px';
+  if (pacmanLeft > window.innerWidth - 50) {
+    pacmanDirection = 'left';
+  } else if (pacmanLeft < 0) {
+    pacmanDirection = 'right';
+  } else if (pacmanTop < 0) {
+    pacmanDirection = 'down';
+  } else if (pacmanTop > window.innerHeight - 50) {
+    pacmanDirection = 'up';
+  }
+};
+setInterval(pacmanMove, 10);
+document.onkeydown = function(event) {
+  if (event.keyCode === 37) {
+    pacmanDirection = 'left';
+  } else if (event.keyCode === 38) {
+    pacmanDirection = 'up';
+  } else if (event.keyCode === 39) {
+    pacmanDirection = 'right';
+  } else if (event.keyCode === 40) {
+    pacmanDirection = 'down';
+  }
+};
+var score = 0;
+var scoreDisplay = document.createElement('div');
+scoreDisplay.style.position = 'absolute';
+scoreDisplay.style.top = '0px';
+scoreDisplay.style.left = '0px';
+scoreDisplay.style.fontSize = '20px';
+scoreDisplay.innerHTML = 'Tickets: ' + score;
+document.body.appendChild(scoreDisplay);
+var items = [];
+var createItem = function() {
+  var item = document.createElement('div');
+  item.style.width = '50px';
+  item.style.height = '50px';
+  item.style.backgroundColor = 'red';
+  item.style.borderRadius = '25px';
+  item.style.position = 'absolute';
+  item.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+  item.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+  document.body.appendChild(item);
+  items.push(item);
+};
+for (var i = 0; i < 5; i++) {
+  createItem();
+}
+var checkCollision = function(item) {
+  var pacmanLeft = parseInt(pacman.style.left);
+  var pacmanTop = parseInt(pacman.style.top);
+  var itemLeft = parseInt(item.style.left);
+  var itemTop = parseInt(item.style.top);
+  if (pacmanLeft < itemLeft + 50 &&
+      pacmanLeft + 50 > itemLeft &&
+      pacmanTop < itemTop + 50 &&
+      pacmanTop + 50 > itemTop) {
+    return true;
+  } else {
+    return false;
+  }
+};
+var checkCollisions = function() {
+  for (var i = 0; i < items.length; i++) {
+    if (checkCollision(items[i])) {
+      document.body.removeChild(items[i]);
+      items.splice(i, 1);
+      score++;
+      scoreDisplay.innerHTML = 'Tickets: ' + score;
+      createItem();
+    }
+  }
+};
+setInterval(checkCollisions, 10);
+pacman.style.backgroundImage = 'url("https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/nb3m4vdppw5kwqfnptk9")';
+pacman.style.backgroundSize = 'cover';
+pacman.style.backgroundColor = '#4253FF';
+document.body.style.padding = '20px';
+for (var i = 0; i < items.length; i++) {
+  items[i].style.backgroundImage = 'url("https://assets.website-files.com/5a0242c3d47dd70001e5b2e9/5e7beeef476cad2856dd24e8_brand-identity-shape-8.png")';
+  items[i].style.backgroundSize = 'cover';
+}
+var createItem = function() {
+  var item = document.createElement('div');
+  item.style.width = '50px';
+  item.style.height = '50px';
+  item.style.backgroundImage = 'url("https://assets.website-files.com/5a0242c3d47dd70001e5b2e9/5e7beeef476cad2856dd24e8_brand-identity-shape-8.png")';
+  item.style.backgroundSize = 'cover';
+  item.style.borderRadius = '25px';
+  item.style.position = 'absolute';
+  item.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+  item.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+  document.body.appendChild(item);
+  items.push(item);
+};
+document.body.style.background = 'linear-gradient(#414141, #000000)';
+
+scoreDisplay.style.color = 'white';
+scoreDisplay.style.fontFamily = 'Roboto';
+scoreDisplay.style.marginLeft = '10px';
+scoreDisplay.style.fontFamily = 'sans-serif';
+var negativeReviews = 0;
+var negativeReviewsDisplay = document.createElement('div');
+negativeReviewsDisplay.style.position = 'absolute';
+negativeReviewsDisplay.style.top = '0px';
+negativeReviewsDisplay.style.right = '0px';
+negativeReviewsDisplay.style.fontSize = '20px';
+negativeReviewsDisplay.style.fontFamily = 'sans-serif';
+negativeReviewsDisplay.style.marginRight = '10px';
+negativeReviewsDisplay.innerHTML = 'Negative Reviews: ' + negativeReviews;
+document.body.appendChild(negativeReviewsDisplay);
+
+var negativeItems = [];
+var createNegativeItem = function() {
+  var negativeItem = document.createElement('div');
+  negativeItem.style.width = '100px';
+  negativeItem.style.height = '10px';
+  negativeItem.style.backgroundColor = 'red';
+  negativeItem.style.borderRadius = '25px';
+  negativeItem.style.position = 'absolute';
+negativeItem.innerHTML = 'Bad, I\'m unsatisfied.';
+negativeItem.style.color = 'white';
+negativeItem.style.fontSize = '10px';
+negativeItem.style.textAlign = 'center';
+negativeItem.style.fontFamily = 'sans-serif';
+  negativeItem.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+  negativeItem.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+  document.body.appendChild(negativeItem);
+  negativeItems.push(negativeItem);
+
+};
+for (var i = 0; i < 5; i++) {
+  createNegativeItem();
+}
+var checkNegativeCollision = function(negativeItem) {
+  var pacmanLeft = parseInt(pacman.style.left);
+  var pacmanTop = parseInt(pacman.style.top);
+  var negativeItemLeft = parseInt(negativeItem.style.left);
+  var negativeItemTop = parseInt(negativeItem.style.top);
+  if (pacmanLeft < negativeItemLeft + 50 &&
+      pacmanLeft + 50 > negativeItemLeft &&
+      pacmanTop < negativeItemTop + 50 &&
+      pacmanTop + 50 > negativeItemTop) {
+    return true;
+  } else {
+    return false;
+  }
+};
+var checkNegativeCollisions = function() {
+  for (var i = 0; i < negativeItems.length; i++) {
+    if (checkNegativeCollision(negativeItems[i])) {
+      document.body.removeChild(negativeItems[i]);
+      negativeItems.splice(i, 1);
+      negativeReviews++;
+      negativeReviewsDisplay.innerHTML = 'Negative Reviews: ' + negativeReviews;
+      createNegativeItem();
+    }
+  }
+};
+setInterval(checkNegativeCollisions, 10);
+
+/* Create a "Positive Reviews" counter which starts at 100% and checks the ratio of tickets to negative reviews */
+var positiveReviews = 100;
+var positiveReviewsDisplay = document.createElement('div');
+positiveReviewsDisplay.style.position = 'absolute';
+positiveReviewsDisplay.style.top = '0px';
+positiveReviewsDisplay.style.marginRight = '50%';
+positiveReviewsDisplay.style.fontSize = '20px';
+positiveReviewsDisplay.style.fontFamily = 'sans-serif';
+positiveReviewsDisplay.style.wordWrap = 'normal';
+positiveReviewsDisplay.innerHTML = 'Positive Reviews: ' + positiveReviews + '%';
+document.body.appendChild(positiveReviewsDisplay);
+var checkPositiveReviews = function() {
+  positiveReviews = Math.round(score / (score + negativeReviews) * 100);
+  positiveReviewsDisplay.innerHTML = 'Positive Reviews: ' + positiveReviews + '%';
+};
+setInterval(checkPositiveReviews, 10);
+
+/* move positive reviews to center */
+positiveReviewsDisplay.style.left = '50%';
+positiveReviewsDisplay.style.transform = 'translateX(-50%)';
+
+/* set text colors to white */
+scoreDisplay.style.color = 'white';
+negativeReviewsDisplay.style.color = 'white';
+positiveReviewsDisplay.style.color = 'white';
+
+/* set background gradient as #414141 to #000000 */
+document.body.style.background = 'linear-gradient(#414141, #000000)';
+
+});
+        </script>
+    </head>
+    <body style="margin: 0;">
+</html>
