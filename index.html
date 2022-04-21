@@ -143,14 +143,14 @@ document.body.appendChild(negativeReviewsDisplay);
 var negativeItems = [];
 var createNegativeItem = function() {
   var negativeItem = document.createElement('div');
-  negativeItem.style.width = '100px';
-  negativeItem.style.height = '10px';
+  negativeItem.style.width = '200px';
+  negativeItem.style.height = '30px';
   negativeItem.style.backgroundColor = 'red';
   negativeItem.style.borderRadius = '25px';
   negativeItem.style.position = 'absolute';
 negativeItem.innerHTML = 'Bad, I\'m unsatisfied.';
 negativeItem.style.color = 'white';
-negativeItem.style.fontSize = '10px';
+negativeItem.style.fontSize = '20px';
 negativeItem.style.textAlign = 'center';
 negativeItem.style.fontFamily = 'sans-serif';
   negativeItem.style.top = Math.random() * (window.innerHeight - 50) + 'px';
